@@ -459,5 +459,87 @@ body ::placeholder {
 
 **成功！！！**
 
+### 6. 处理图片资源
+
+#### **·** file-loader
+
+用法参考： https://www.npmjs.com/package/file-loader
+
+描述： The `file-loader` resolves `import`/`require()` on a file into a url and emits the file into the output directory.
+
+第一步，安装
+
+```shell
+npm install file-loader --save-dev
+```
+
+第二步，修改 package.json 文件
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'static/images/[name].[ext]',
+          publicPath: '/',
+        },
+      },
+    ],
+  },
+};
+```
+
+测试，在 index.css 文件中，引入背景图片（先需要在 `src/images` 文件夹下放入预先准备好的图片）：
+
+```css
+body {
+  background-color: blue;
+  display: flex;
+  background: url(./images/git命令.jpg) 0 0 no-repeat;
+}
+```
+
+启动项目，选中片成功作为背景；
+
+打包项目，成功在 `dist/static/images`文件夹下，存放图片。
+
+#### **·** url-loader
+
+用法参考： https://www.npmjs.com/package/url-loader
+
+描述： A loader for webpack which transforms files into base64 URIs.
+
+第一步，安装
+
+```shell
+npm install url-loader --save-dev
+```
+
+第二步，修改 package.json 文件
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,	// 会处理的最大值
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+```
 
 
+
+### 7. 处理

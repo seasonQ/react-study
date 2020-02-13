@@ -40,6 +40,14 @@ module.exports = {
           'postcss-loader',
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'static/images/[name].[ext]',
+          publicPath: '/',
+        },
+      },
     ],
   },
 

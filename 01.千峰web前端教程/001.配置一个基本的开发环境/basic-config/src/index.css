@@ -1,6 +1,7 @@
 body {
   background-color: blue;
   display: flex;
+  background: url(./images/git命令.jpg) 0 0 no-repeat;
 }
 
 ::placeholder {
