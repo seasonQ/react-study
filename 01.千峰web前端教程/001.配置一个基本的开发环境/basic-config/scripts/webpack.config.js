@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const CopyPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
 
@@ -61,6 +63,13 @@ module.exports = {
       filename: '[name].[chunkHash:8].css',
       chunkFilename: '[id].css',
     }),
+
+    new CopyPlugin([
+      { 
+        from: path.resolve( process.cwd(), 'src/statics/'), 
+        to: path.resolve( process.cwd(), 'dist/statics/') 
+      },
+    ]),
   ],
 
   devServer: {

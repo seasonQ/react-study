@@ -542,4 +542,40 @@ module.exports = {
 
 
 
-### 7. 处理
+### 7. 处理静态资源
+
+直接将资源拷贝到目标目录，不做处理。
+
+#### **·** copy-webpack-plugin
+
+用法参考： https://www.npmjs.com/package/copy-webpack-plugin
+
+描述： Copies individual files or entire directories, which already exist, to the build directory.
+
+第一步，安装
+
+```shell
+npm install copy-webpack-plugin --save-dev
+```
+
+第二步，修改 package.json 文件
+
+```js
+const CopyPlugin = require('copy-webpack-plugin');
+ 
+module.exports = {
+  plugins: [
+    new CopyPlugin([
+      { 
+        from: path.resolve( process.cwd(), 'src/statics/'), 
+        to: path.resolve( process.cwd(), 'dist/statics/') 
+      },
+    ]),
+  ],
+};
+```
+
+验证：
+
+在 `src/statics` 文件夹下，存入任意静态文件（比如： js文件、图片等），在 HTML 中直接引用。项目打包后，会将 `src/statics` 里文件复制到 `dist/statics` 文件夹下。
+
