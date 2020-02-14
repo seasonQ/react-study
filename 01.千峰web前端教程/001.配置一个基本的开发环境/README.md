@@ -579,3 +579,73 @@ module.exports = {
 
 在 `src/statics` 文件夹下，存入任意静态文件（比如： js文件、图片等），在 HTML 中直接引用。项目打包后，会将 `src/statics` 里文件复制到 `dist/statics` 文件夹下。
 
+### 8. 添加 babel
+
+#### **·** babel-loader
+
+用法参考： https://www.npmjs.com/package/babel-loader
+
+描述： This package allows transpiling JavaScript files using [Babel](https://github.com/babel/babel) and [webpack](https://github.com/webpack/webpack).
+
+第一步，安装
+
+```shell
+# webpack 4.x | babel-loader 8.x | babel 7.x
+npm install -D babel-loader @babel/core @babel/preset-env webpack
+```
+
+第二步，修改 `webpack.config.js` 文件
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
+    }
+  ]
+}
+```
+
+验证：
+
+在 `src` 文件夹下，新建 `test.js` 文件，
+
+```js
+export const add = ( x, y ) => {
+  console.log( x + y );
+}
+```
+
+在 `src` 文件夹下的 `index.js` 文件中引用并调用函数
+
+```js
+import { add } from './test';
+
+add( 10, 34);
+```
+
+运行项目时，方法正确执行（证明导入成功）。
+
+#### **·** babel-merge
+
+用法参考：https://www.npmjs.com/package/babel-merge
+
+描述：`babel-merge` merges multiple Babel configuration objects into a single copy. Plugin and preset objects and arrays will be merged together.
+
+可以使用 `babel-merge` 将 `webpack.config.js` 拆成 `webpack.config.dev.js` 、`webpack.config.prd.js`、`webpack.config.base.js` 等。
+
+安装
+
+```shell
+npm install --save babel-merge
+```
+
+具体使用方法，参考官网文档。
+
