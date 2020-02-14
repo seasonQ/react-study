@@ -1,6 +1,6 @@
 # React 学习
 
-`react` 官网： https://reactjs.org/，可以选择中文版；
+`react` 官网： https://reactjs.org/ ，可以选择中文版；
 
 快速搭建项目工具：[create-react-app](https://www.npmjs.com/package/create-react-app) ;
 
