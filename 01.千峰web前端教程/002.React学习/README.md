@@ -343,7 +343,7 @@ render(
 
 ### 4. 组件化结构
 
-一个 `react` 组件化项目的目录结构组织方式。
+`react` 组件化项目的目录结构组织方式。
 
 示例：my-app-05
 
@@ -366,13 +366,126 @@ render(
 >   export { default as TodoHeader } from './TodoHeader';
 >   ```
 
+### 5. 组件的数据挂载 props 及 prop-types
 
+#### props
 
+示例：my-app-06
 
+主要代码
 
+```js
+// 父组件中
+class App extends Component {
+  render () {
+    return (
+      <Fragment>
+        <TodoHeader title= '代办事项'>
+          <p>今日事，今日毕</p>
+        </TodoHeader>
+        <TodoInput btnText= '添加'></TodoInput>
+      </Fragment>
+    )
+  }
+}
 
+// 子组件 TodoHeader 中，props ( props.chilrend 是指子元素 )
+// 使用 类组件方式
+import React, { Component } from 'react';
+export default class TodoHeader extends Component {
+  render () {
+    const { title, children } = this.props;
+    return (
+      <h1 title= {title}>{children}</h1>
+    )
+  }
+}
 
+// 子组件 TodoInput 中，props ( props.chilrend 是指子元素 )
+// 使用函数式创建组件
+import React from 'react';
+export default function TodoInput ( props ) {
+  return (
+    <div>
+      <input type= 'text' /><button>{props.btnText}</button>
+    </div>
+  )
+}
 
+```
+
+> 注意：
+>
+> - 传递 number、boolean 等非 string 类型的数据，需要使用 `{ }`；
+> - props.chilrend 是指子元素
+
+#### prop-types 类型检测
+
+props 的类型检测
+
+( `prop-types` 好像不需要额外安装了 )
+
+描述： Runtime type checking for React props and similar objects.
+
+用法参考：https://www.npmjs.com/package/prop-types
+
+安装
+
+```shell
+npm install --save prop-types
+```
+
+使用
+
+```js
+import React from 'react';
+import PropTypes from 'prop-types';
+ 
+class MyComponent extends React.Component {
+  // 方式二：只有 类组件 才可以使用这种方式
+  static propTypes = {
+  	optionalNumber: PropTypes.number,
+  	optionalString: PropTypes.string.isRequired,                
+  }
+
+  render() {
+    // ... do things with the props
+  }
+}
+
+// 方式一：函数组件 和 类组件 都可以使用这种方式
+MyComponent.propTypes = {
+  optionalNumber: PropTypes.number,
+  optionalString: PropTypes.string.isRequired,
+}
+
+```
+
+#### porps 默认值
+
+```js
+import React from 'react';
+import PropTypes from 'prop-types';
+ 
+class MyComponent extends React.Component {
+  // 方式二：只有 类组件 才可以使用这种方式
+  static defaultProps = {
+  	optionalNumber: 1,
+  	optionalString: '',                
+  }
+
+  render() {
+    // ... do things with the props
+  }
+}
+
+// 方式一：函数组件 和 类组件 都可以使用这种方式
+MyComponent.defaultProps = {
+  optionalNumber: 1,
+  optionalString: '',
+}
+
+```
 
 
 
