@@ -341,7 +341,30 @@ render(
 }
 ```
 
+### 4. 组件化结构
 
+一个 `react` 组件化项目的目录结构组织方式。
+
+示例：my-app-05
+
+> 参考 `my-app-05` 项目时，需要注意几个点：
+>
+> - `components` 结构目录方式；
+>
+> - `<></>` 和 `<Fragment></Fragment>` 两个标签的使用；
+>
+> - export 的两种方式：
+>
+>   ```js
+>   // 方式一
+>   import TodoHeader from './TodoHeader';
+>   export {
+>     TodoHeader,
+>   }
+>   
+>   // 方式二
+>   export { default as TodoHeader } from './TodoHeader';
+>   ```
 
 
 
