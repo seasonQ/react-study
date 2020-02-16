@@ -484,14 +484,135 @@ MyComponent.defaultProps = {
   optionalNumber: 1,
   optionalString: '',
 }
-
 ```
 
+### 6. state
 
+示例：my-app-07
 
+官网原话 `state 与 props 类似，但是 state 是私有的，并且完全受控于当前组件。`
 
+#### 声明两种方式
 
+```js
+// 使用 类组件方式
+import React, { Component } from 'react';
 
+export default class TodoHeader extends Component {
+  // state 与 props 类似，但是 state 是私有的，并且完全受控于当前组件。
+  // state 定义方式一: 
+  state= {
+    desc: '这是 state 中的状态'
+  }
+
+  // state 定义方式二，constructor:
+  constructor ( props ) {
+    super( props );
+    this.state = {
+      desc: '这是 state 中的状态'
+    }
+  }
+
+  render () {
+    return (
+      <h1 >
+        <div>{ this.state.desc }</div>
+      </h1>
+    )
+  }
+}
+```
+
+> 注意：
+>
+> 函数式组件没有 state。
+
+#### 模板渲染语法
+
+- 渲染数组时，常使用 `map`遍历
+
+  ```jsx
+    (
+      <ol>
+        {
+          props.todos.map ( item => {
+            return (
+              <TodoItem key= {item.id}
+                        { ...item } /> {/** 这里传递 props 使用了特殊技巧 */}
+            )
+          })
+        }
+      </ol>
+    )
+  ```
+
+- 渲染富文本是，使用 `dangerouslySetInnerHTML`
+
+  > `dangerouslySetInnerHTML` 是 React 为浏览器 DOM 提供 `innerHTML` 的替换方案 ( `__html` )。
+  >
+  > ```js
+  > function createMarkup() {
+  >   return {__html: 'First &middot; Second'};
+  > }
+  > 
+  > function MyComponent() {
+  >   return <div dangerouslySetInnerHTML={createMarkup()} />;
+  > }
+  > ```
+  >
+  > 参考地址： https://zh-hans.reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml
+
+#### setState
+
+`react` 中修改 `state` 需要使用 `setState`:
+
+```js
+export default class Like extends Component {
+  constructor ( props ) {
+    super( props );
+    this.state = {
+      isLike: false,
+    }
+  }
+
+  doClickLike = () => {
+    // 方法一：setState 参数，传入 对象
+    // this.setState({
+    //   isLike: !this.state.isLike
+    // })
+
+    // 方法二：setState 参数，传入 方法
+    // this.setState(()=> {
+    //   return {
+    //     isLike: !this.state.isLike
+    //   }
+    // })
+
+    // 方法二的改良版
+    this.setState( ( preState, preProps ) => {
+      // console.log(">>>>>>>>>>>>>>>preState", preState);
+      // console.log(">>>>>>>>>>>>>>>preProps", preProps);
+      return {
+        isLike: !preState.isLike
+      }
+    }, () => {
+      // 由于 setState 是异步的，如果要获取到最新的 state，应该在这个回调里来获取
+      // console.log(">>>>>>>>>>>>>>>>>newState", this.state);
+    })
+  }
+
+  render () { 
+    // ...
+  }
+```
+
+使用 `setState` 方法修改数据，页面会重新渲染(我们想要的，直接使用 `=` 则不会)。
+
+`setState` 方法是一个异步函数。如果要获取最新的 `state`，则可以在`setState`的第二个参数中获取。
+
+> 补充:
+>
+> 表情字符串(如：`❤️、😱` 等 )：[https://emojipedia.org](https://emojipedia.org/)
 
 
 
